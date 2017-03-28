@@ -25,34 +25,47 @@ var TasksComponent = (function () {
         event.preventDefault();
         var newTask = {
             title: this.title,
-            isDone: false
+            passwordSite: this.passwordSite
         };
         this.taskService.addTask(newTask)
             .subscribe(function (task) {
             _this.tasks.push(task);
             _this.title = '';
+            _this.passwordSite = '';
         });
     };
     TasksComponent.prototype.deleteTask = function (id) {
         var tasks = this.tasks;
-        this.taskService.deleteTask(id).subscribe(function (data) {
-            if (data.n == 1) {
-                for (var i = 0; i < tasks.length; i++) {
-                    if (tasks[i]._id == id) {
-                        tasks.splice(i, 1);
+        if (confirm("ATTENTION, YOU ARE GOING TO DELETE YOUR DATA") == true) {
+            this.taskService.deleteTask(id).subscribe(function (data) {
+                if (data.n == 1) {
+                    for (var i = 0; i < tasks.length; i++) {
+                        if (tasks[i]._id == id) {
+                            tasks.splice(i, 1);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        else {
+            return false;
+        }
     };
-    TasksComponent.prototype.updateStatus = function (task) {
+    TasksComponent.prototype.editTask = function () {
+        document.getElementById('edit').style.display = "block";
+    };
+    TasksComponent.prototype.updateTask = function (task) {
+        var _this = this;
         var _task = {
             _id: task._id,
             title: task.title,
-            isDone: !task.isDone
+            passwordSite: task.passwordSite,
         };
-        this.taskService.updateStatus(_task).subscribe(function (data) {
-            task.isDone = !task.isDone;
+        this.taskService.updateTask(_task)
+            .subscribe(function (_task) {
+            _this.tasks.push(_task);
+            _this.title = '';
+            _this.passwordSite = '';
         });
     };
     return TasksComponent;

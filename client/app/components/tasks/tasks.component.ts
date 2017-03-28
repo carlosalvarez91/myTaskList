@@ -10,6 +10,7 @@ import {Task} from '../../../Task';
 export class TasksComponent { 
   tasks: Task[];
   title: string;
+  passwordSite: string;
   
   constructor(private taskService:TaskService){
      this.taskService.getTasks()
@@ -21,17 +22,19 @@ export class TasksComponent {
           event.preventDefault();
           var newTask = {
             title: this.title,
-            isDone: false
+            passwordSite: this.passwordSite
           }
           this.taskService.addTask(newTask)
               .subscribe(task=> {
                 this.tasks.push(task);
                 this.title = '';
+                this.passwordSite = '';
               });
     }
+    
     deleteTask(id){
       var tasks = this.tasks;
-      
+      if (confirm("ATTENTION, YOU ARE GOING TO DELETE YOUR DATA") == true){
       this.taskService.deleteTask(id).subscribe(data => {
         if(data.n == 1){
           for(var i = 0; i < tasks.length; i++){
@@ -41,16 +44,27 @@ export class TasksComponent {
           }
         }
       });
+      }else{
+        return false;
+      }
+
     }
-    updateStatus(task){
+    editTask(){
+      document.getElementById('edit').style.display = "block";
+    }
+    
+    updateTask(task){
       var _task = {
         _id:task._id,
         title: task.title,
-        isDone: !task.isDone
+        passwordSite: task.passwordSite,
       };
       
-      this.taskService.updateStatus(_task).subscribe(data => {
-        task.isDone = !task.isDone;
+      this.taskService.updateTask(_task)
+              .subscribe(_task=> {
+                this.tasks.push(_task);
+                this.title = '';
+                this.passwordSite = '';
       });
     }
 }

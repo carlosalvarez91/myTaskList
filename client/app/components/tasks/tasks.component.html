@@ -1,19 +1,38 @@
-<form class="well" (submit)="addTask($event)">
-        <div class="form-group">
-            <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Task">
+<form class="well">
+        <div class="col-xs-3">
+            <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website">
         </div>
+        <div class="col-xs-3">
+             <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password">
+        </div>
+        <div class="">
+            <input type="button" (click)="addTask($event)" value="Save" class="btn btn-success">
+        </div>
+</form>
+
 <div class="task-list">
     <div *ngFor="let task of tasks">
-        <div class="col-md-1">
-            <input type="checkbox" [checked]="task.isDone" (click)="updateStatus(task)">
+        <div class="well">
+            <div class="" id="info">
+                <strong>Website:</strong>{{task.title}}
+                <strong>Password:</strong> {{task.passwordSite}}
+            </div>
+            <div class="col-xs-3" style="display:none;" id="edit">
+                <div class="col-xs-3">
+                    <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website">
+                </div>
+                <div class="col-xs-3">
+                    <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password">
+                </div>
+                <div class="">
+                    <input type="button" (click)="updateTask(task._id)" value="Update" class="btn btn-primary">
+                </div>
+           </div>  
+            <div class="">
+                <input type="button" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
+                <input type="button" (click)="editTask(task._id)" value="Edit" class="btn btn-warning">
+            </div>
         </div>
-        <div class="col-md-7">
-            {{task.title}}
-        </div>
-        <div class="col-md-4">
-            <input type="button" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
-        </div>
-        <br><br>
     </div>
 </div>
-</form>
+
