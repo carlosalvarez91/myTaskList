@@ -15,6 +15,7 @@ var TasksComponent = (function () {
     function TasksComponent(taskService) {
         var _this = this;
         this.taskService = taskService;
+        this.appState = 'default';
         this.taskService.getTasks()
             .subscribe(function (tasks) {
             _this.tasks = tasks;
@@ -51,22 +52,16 @@ var TasksComponent = (function () {
             return false;
         }
     };
-    TasksComponent.prototype.editTask = function () {
-        document.getElementById('edit').style.display = "block";
+    TasksComponent.prototype.editTask = function (task) {
+        this.appState = 'edit';
+        this.title = task.title;
+        this.passwordSite = task.passwordSite;
+        // window scroll up 
     };
-    TasksComponent.prototype.updateTask = function (task) {
-        var _this = this;
-        var _task = {
-            _id: task._id,
-            title: task.title,
-            passwordSite: task.passwordSite,
-        };
-        this.taskService.updateTask(_task)
-            .subscribe(function (_task) {
-            _this.tasks.push(_task);
-            _this.title = '';
-            _this.passwordSite = '';
-        });
+    TasksComponent.prototype.cancel = function () {
+        this.appState = 'default';
+        this.title = '';
+        this.passwordSite = '';
     };
     return TasksComponent;
 }());

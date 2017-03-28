@@ -11,6 +11,8 @@ export class TasksComponent {
   tasks: Task[];
   title: string;
   passwordSite: string;
+  oldTask;
+  appState = 'default';
   
   constructor(private taskService:TaskService){
      this.taskService.getTasks()
@@ -49,15 +51,35 @@ export class TasksComponent {
       }
 
     }
-    editTask(){
-      document.getElementById('edit').style.display = "block";
+    editTask(task){
+      this.appState = 'edit';
+      this.title = task.title;
+      this.passwordSite = task.passwordSite;
+     // window scroll up 
+
     }
-    
+    cancel(){
+      this.appState = 'default';
+      this.title = '';
+      this.passwordSite= '';
+    }
+    /*
+    updateTask(id){
+    for(var i = 0; i < this.tasks.length; i++){
+       if (this.tasks[i].id == this.oldTask){
+         this.tasks[i].title = this.title;
+         this.tasks[i].passwordSite = this.passwordSite;
+      }
+     }
+
+    }
+  
+
     updateTask(task){
       var _task = {
         _id:task._id,
         title: task.title,
-        passwordSite: task.passwordSite,
+        passwordSite: task.passwordSite
       };
       
       this.taskService.updateTask(_task)
@@ -66,5 +88,5 @@ export class TasksComponent {
                 this.title = '';
                 this.passwordSite = '';
       });
-    }
+    }*/
 }

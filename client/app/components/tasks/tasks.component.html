@@ -1,12 +1,16 @@
 <form class="well">
         <div class="col-xs-3">
-            <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website">
+            <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website" required>
         </div>
         <div class="col-xs-3">
-             <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password">
+             <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password" required>
         </div>
-        <div class="">
+        <div class="" *ngIf="appState == 'default'">
             <input type="button" (click)="addTask($event)" value="Save" class="btn btn-success">
+        </div>
+        <div *ngIf="appState == 'edit'">
+             <input type="button" (click)="updateTask(task)" value="Update" class="btn btn-primary">
+             <input type="button" (click)="cancel()" value="Cancel" class="btn btn-danger">
         </div>
 </form>
 
@@ -14,23 +18,15 @@
     <div *ngFor="let task of tasks">
         <div class="well">
             <div class="" id="info">
+                
                 <strong>Website:</strong>{{task.title}}
                 <strong>Password:</strong> {{task.passwordSite}}
+                
             </div>
-            <div class="col-xs-3" style="display:none;" id="edit">
-                <div class="col-xs-3">
-                    <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website">
-                </div>
-                <div class="col-xs-3">
-                    <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password">
-                </div>
-                <div class="">
-                    <input type="button" (click)="updateTask(task._id)" value="Update" class="btn btn-primary">
-                </div>
-           </div>  
             <div class="">
                 <input type="button" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
-                <input type="button" (click)="editTask(task._id)" value="Edit" class="btn btn-warning">
+             <input type="button" (click)="editTask(task)" value="Edit" class="btn btn-warning">
+               <!--  <input type="button" (click)="updateTask(task._id)" value="Update" class="btn btn-primary">-->
             </div>
         </div>
     </div>
