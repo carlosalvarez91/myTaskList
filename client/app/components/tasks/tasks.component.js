@@ -56,12 +56,26 @@ var TasksComponent = (function () {
         this.appState = 'edit';
         this.title = task.title;
         this.passwordSite = task.passwordSite;
-        // window scroll up 
+        this.oldTask = task;
+        //Scroll up window
     };
     TasksComponent.prototype.cancel = function () {
         this.appState = 'default';
         this.title = '';
         this.passwordSite = '';
+    };
+    TasksComponent.prototype.updateTask = function (task) {
+        for (var i = 0; i < this.tasks.length; i++) {
+            if (this.tasks[i]._id == this.oldTask._id) {
+                this.tasks[i].title = this.title;
+                this.tasks[i].passwordSite = this.passwordSite;
+                console.log('Updated');
+            }
+        }
+        this.taskService.updateTask(task).subscribe(function (data) {
+            task.title = '';
+            task.passwordSite = '';
+        });
     };
     return TasksComponent;
 }());

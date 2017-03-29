@@ -13,7 +13,7 @@ export class TasksComponent {
   passwordSite: string;
   oldTask;
   appState = 'default';
-  
+
   constructor(private taskService:TaskService){
      this.taskService.getTasks()
          .subscribe(tasks => {
@@ -33,7 +33,7 @@ export class TasksComponent {
                 this.passwordSite = '';
               });
     }
-    
+   
     deleteTask(id){
       var tasks = this.tasks;
       if (confirm("ATTENTION, YOU ARE GOING TO DELETE YOUR DATA") == true){
@@ -55,7 +55,8 @@ export class TasksComponent {
       this.appState = 'edit';
       this.title = task.title;
       this.passwordSite = task.passwordSite;
-     // window scroll up 
+      this.oldTask = task;
+     //Scroll up window
 
     }
     cancel(){
@@ -63,30 +64,17 @@ export class TasksComponent {
       this.title = '';
       this.passwordSite= '';
     }
-    /*
-    updateTask(id){
-    for(var i = 0; i < this.tasks.length; i++){
-       if (this.tasks[i].id == this.oldTask){
-         this.tasks[i].title = this.title;
-         this.tasks[i].passwordSite = this.passwordSite;
-      }
-     }
-
-    }
-  
-
     updateTask(task){
-      var _task = {
-        _id:task._id,
-        title: task.title,
-        passwordSite: task.passwordSite
-      };
-      
-      this.taskService.updateTask(_task)
-              .subscribe(_task=> {
-                this.tasks.push(_task);
-                this.title = '';
-                this.passwordSite = '';
+            for(var i = 0; i < this.tasks.length; i++){
+            if (this.tasks[i]._id == this.oldTask._id){
+              this.tasks[i].title  = this.title;
+              this.tasks[i].passwordSite = this.passwordSite;
+              console.log('Updated');
+            }
+          }
+      this.taskService.updateTask(task).subscribe(data =>{
+        task.title = '';
+        task.passwordSite = '';
       });
-    }*/
+    }  
 }

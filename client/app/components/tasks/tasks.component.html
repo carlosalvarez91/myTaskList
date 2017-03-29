@@ -19,14 +19,13 @@
         <div class="well">
             <div class="" id="info">
                 
-                <strong>Website:</strong>{{task.title}}
-                <strong>Password:</strong> {{task.passwordSite}}
-                
+                <strong>Website:</strong>&nbsp;<b>{{task.title}}</b>&nbsp;&nbsp;
+                <strong>Password:</strong>&nbsp;<b> {{task.passwordSite}}</b>
+
             </div>
             <div class="">
                 <input type="button" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
              <input type="button" (click)="editTask(task)" value="Edit" class="btn btn-warning">
-               <!--  <input type="button" (click)="updateTask(task._id)" value="Update" class="btn btn-primary">-->
             </div>
         </div>
     </div>
