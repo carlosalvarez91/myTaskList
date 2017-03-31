@@ -1,24 +1,30 @@
-import { Component } from '@angular/core';
-import {TaskService} from '../../services/task.service';
+import { Component, OnInit } from '@angular/core';
 import {Task} from '../../../task';
-@Component({
-  moduleId: module.id,
-  selector: 'tasks',
-  templateUrl: 'tasks.component.html'
-})
+import { TaskService} from'../../services/task.service'
 
-export class TasksComponent { 
+@Component({
+  selector: 'app-tasks',
+  templateUrl: './tasks.component.html',
+  styleUrls: ['./tasks.component.css'],
+
+  
+
+})
+export class TasksComponent implements OnInit {
   tasks: Task[];
   title: string;
   passwordSite: string;
   oldTask;
   appState = 'default';
 
-  constructor(private taskService:TaskService){
-     this.taskService.getTasks()
-         .subscribe(tasks => {
-            this.tasks = tasks;
+  constructor(private taskService:TaskService) { 
+        this.taskService.getTasks()
+        .subscribe(tasks => {
+        this.tasks = tasks;
     });
+  }
+
+  ngOnInit() {
   }
       addTask(event){
           event.preventDefault();

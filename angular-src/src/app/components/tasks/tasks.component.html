@@ -1,0 +1,33 @@
+<form class="well">
+        <div class="col-xs-3">
+            <input  type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Website" required>
+        </div>
+        <div class="col-xs-3">
+             <input  type="password" [(ngModel)]="passwordSite" name="passwordSite" class="form-control" placeholder="Add Password" required>
+        </div>
+        <div class="" *ngIf="appState == 'default'">
+            <input type="button" (click)="addTask($event)" value="Save" class="btn btn-success">
+        </div>
+        <div *ngIf="appState == 'edit'">
+             <input type="button" (click)="updateTask(task)" value="Update" class="btn btn-primary">
+             <input type="button" (click)="cancel()" value="Cancel" class="btn btn-danger">
+        </div>
+</form>
+
+<div class="task-list">
+    <div *ngFor="let task of tasks">
+        <div class="well">
+            <div class="" id="info">
+                
+                <strong>Website:</strong>&nbsp;<b>{{task.title}}</b>&nbsp;&nbsp;
+                <strong>Password:</strong>&nbsp;<b> {{task.passwordSite}}</b>
+
+            </div>
+            <div class="">
+                <input type="button" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
+             <input type="button" (click)="editTask(task)" value="Edit" class="btn btn-warning">
+            </div>
+        </div>
+    </div>
+</div>
+
