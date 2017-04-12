@@ -10,7 +10,7 @@ import { TaskService} from'../../services/task.service'
   
 
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent {
   tasks: Task[];
   title: string;
   passwordSite: string;
@@ -22,9 +22,6 @@ export class TasksComponent implements OnInit {
         .subscribe(tasks => {
         this.tasks = tasks;
     });
-  }
-
-  ngOnInit() {
   }
       addTask(event){
           event.preventDefault();
@@ -44,7 +41,7 @@ export class TasksComponent implements OnInit {
       var tasks = this.tasks;
       if (confirm("ATTENTION, YOU ARE GOING TO DELETE YOUR DATA") == true){
       this.taskService.deleteTask(id).subscribe(data => {
-        if(data.n == 1){
+        if(data){
           for(var i = 0; i < tasks.length; i++){
             if (tasks[i]._id == id){
               tasks.splice(i, 1);

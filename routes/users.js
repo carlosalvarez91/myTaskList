@@ -47,7 +47,7 @@ router.post('/authenticate', (req, res, next)=> {
                         name: user.name,
                         username: user.username,
                         email: user.email
-                    }
+                    }       
                 });
             }else{
                 return res.json({ success: false, msg:"wrong password"});
@@ -60,6 +60,5 @@ router.post('/authenticate', (req, res, next)=> {
 router.get('/profile',passport.authenticate('jwt', {session:false}), (req, res, next)=> {
     res.json({user: req.user})
 });
-
 
 module.exports = router;

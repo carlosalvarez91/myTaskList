@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+const Schema = mongoose.Schema;
+const Task = require('./task');
+
 
 //User Scheema
-const UserSchema = mongoose.Schema({
+const UserSchema = new Schema({
     name:{
         type: String
     },
@@ -18,7 +21,12 @@ const UserSchema = mongoose.Schema({
     password:{
         type: String,
         required: true
-    }
+    },
+    
+  tasks : [{ 
+     type: Schema.Types.ObjectId,
+     ref: 'Task' 
+    }]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

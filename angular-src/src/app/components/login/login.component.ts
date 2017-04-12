@@ -9,8 +9,9 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: String;
-  password: String;
+  model: any = {};
+  loading = false;
+  error='';
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -18,9 +19,33 @@ export class LoginComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    // set register data in model
+        this.model.username = this.authService.username;
+        this.model.password = this.authService.currentUserPassword;
+        this.authService.currentUserPassword = '';
+    //reset login status
+        this.authService.logout();
   }
 
- onLoginSubmit(){
+    login() {
+        this.loading = true;
+        this.authService.login(this.model.username, this.model.password)
+            .subscribe(result => {
+                if (result === true) {
+                    // login successful
+                    this.flashMessage.show('you are now logged in', {
+                     cssClass: 'alert-success',
+                      timeout: 5000});
+                     this.router.navigate(['tasks']);
+                } else {
+                    // login failed
+                    this.error = 'Username or password is incorrect';
+                    this.loading = false;
+                    this.router.navigate(['login']);
+                }
+            });
+/*  All this is not needed anymore
+onLoginSubmit(){
    const user = {
      username: this.username,
      password: this.password
@@ -40,9 +65,8 @@ export class LoginComponent implements OnInit {
           timeout: 5000});
         this.router.navigate(['login']);
       }
-   
  });
-
+*/
  }
 
 }
