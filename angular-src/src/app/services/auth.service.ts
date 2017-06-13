@@ -9,14 +9,14 @@ export class AuthService {
    // user: any;
 
     public token: string;
-    public username: string = '';
+    public email: string = '';
     public currentUserPassword: string = '';
 
   constructor(private http:Http) {
     // set token if saved in local storage
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;
-        this.username = currentUser && currentUser.username;
+        this.email = currentUser && currentUser.email;
   }
 
   registerUser(user){
@@ -25,16 +25,16 @@ export class AuthService {
     return this.http.post('http://localhost:3000/user/register',user,{headers: headers})
     .map(res => res.json());
   }
-  login(username, password): Observable<boolean>{
+  login(email, password): Observable<boolean>{
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/user/authenticate',JSON.stringify({ username: username, password: password}),{headers: headers})
+    return this.http.post('http://localhost:3000/user/authenticate',JSON.stringify({ email: email, password: password}),{headers: headers})
     .map((response: Response) => {
       let token = response.json() && response.json().token;
       if(token){
         this.token = token;
-        this.username = username;
-        localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+        this.email = email;
+        localStorage.setItem('currentUser', JSON.stringify({ username: email, token: token }));
         return true;
       }else{
         return false;

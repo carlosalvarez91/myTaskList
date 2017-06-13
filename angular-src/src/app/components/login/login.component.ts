@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // set register data in model
-        this.model.username = this.authService.username;
+        this.model.email = this.authService.email;
         this.model.password = this.authService.currentUserPassword;
         this.authService.currentUserPassword = '';
     //reset login status
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.authService.login(this.model.username, this.model.password)
+        this.authService.login(this.model.email, this.model.password)
             .subscribe(result => {
                 if (result === true) {
                     // login successful
@@ -38,10 +38,11 @@ export class LoginComponent implements OnInit {
                       timeout: 5000});
                      this.router.navigate(['tasks']);
                 } else {
-                    // login failed
-                    this.error = 'Username or password is incorrect';
-                    this.loading = false;
-                    this.router.navigate(['login']);
+                  // login failed
+                    this.flashMessage.show('Username of password is incorrect', {
+                     cssClass: 'alert-danger',
+                      timeout: 5000});
+                     this.router.navigate(['login']);
                 }
             });
 /*  All this is not needed anymore

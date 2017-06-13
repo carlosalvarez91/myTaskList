@@ -95,18 +95,6 @@ router.delete('/task/:id', (req, res, next) => {
         }
     })
 });
-/*
-//DELETE TASK
-router.delete('/task/:id', function(req, res, next){
-    Task.remove({_id: mongojs.ObjectId(req.params.id)},function(err, task){
-        if(err){
-            res.send(err);
-        }
-        res.json(task);
-    });
-});
-*/
-
 //Update Task
 router.put('/task/:id', (req, res, next) => {
     token.verify(req, (err, decoded) => {
